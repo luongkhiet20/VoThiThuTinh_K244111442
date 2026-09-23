@@ -1,0 +1,78 @@
+/* Thanh điều hướng chính */
+.navbar {
+  background-color: #173d76;
+  /* Xanh dương */
+  padding: 0;
+  margin-bottom: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Danh sách menu ngang */
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* Từng mục Module */
+.nav-item {
+  position: relative;
+}
+
+/* Thẻ liên kết Module */
+.nav-link {
+  display: block;
+  padding: 12px 20px;
+  color: #ffffff;
+  /* Chữ trắng */
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Hiệu ứng di chuột vào Module */
+.nav-item:hover>.nav-link {
+  background-color: #0b5ed7;
+  /* Xanh đậm hơn khi hover */
+}
+
+/* Menu con sổ xuống (dropdown) */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 130px;
+  background-color: #173d76;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+/* Khi di chuột vào nav-item thì hiện dropdown menu */
+.nav-item:hover .dropdown-menu {
+  display: block;
+}
+
+/* Các mục bên trong dropdown (Bài 13, Bài 14, Bài 18) */
+.dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  color: #ffffff;
+  /* Chữ trắng */
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color 0.2s ease;
+}
+
+/* Hiệu ứng di chuột vào mục con */
+.dropdown-item:hover {
+  background-color: #084298;
+  /* Màu xanh đậm hơn khi hover mục con */
+}

@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <ul class="nav-list">
+    <li class="nav-item" *ngFor="let m of modules">
+      <a class="nav-link">{{ m }}</a>
+      <ul class="dropdown-menu" *ngIf="m === 'Module 2'">
+        <li>
+          <a class="dropdown-item" routerLink="/service-product-image-event">Bài 13</a>
+        </li>
+        <li>
+          <a class="dropdown-item" routerLink="/service-product-catalog">Bài 14</a>
+        </li>
+        <li>
+          <a class="dropdown-item" routerLink="/service-customer-group">Bài 18</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,27 @@
+<table border="1">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Age</th>
+    <th>#</th>
+  </tr>
+  <ng-container *ngFor="let g of customerGroups">
+    <tr>
+      <td colspan="5">{{ g.CustomerTypeId }} - {{ g.CustomterTypeName }}</td>
+    </tr>
+    <tr *ngFor="let c of g.Customers">
+      <td>{{ c.Id }}</td>
+      <td>{{ c.Name }}</td>
+      <td>{{ c.Email }}</td>
+      <td>{{ c.Age }}</td>
+      <td>
+        <img [src]="c.Image" [alt]="c.Name" />
+      </td>
+    </tr>
+  </ng-container>
+</table>
+
+<div *ngIf="errMessage" style="color: red; margin-top: 10px;">
+  {{ errMessage }}
+</div>

@@ -1,0 +1,23 @@
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  border: 1px solid #777;
+}
+
+th, td {
+  border: 1px solid #777;
+  padding: 4px 8px;
+  vertical-align: middle;
+}
+
+th {
+  text-align: center;
+  font-weight: bold;
+}
+
+img {
+  width: 140px;
+  height: 110px;
+  object-fit: cover;
+  display: block;
+}

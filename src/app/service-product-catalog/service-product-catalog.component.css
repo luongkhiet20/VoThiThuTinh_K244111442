@@ -1,0 +1,17 @@
+table {
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+td {
+  padding: 6px 12px;
+  vertical-align: middle;
+}
+
+img {
+  width: 50px;
+  height: 60px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
