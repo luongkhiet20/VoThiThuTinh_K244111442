@@ -1,0 +1,19 @@
+{
+  "name": "my-server-mongodb",
+  "version": "1.0.0",
+  "description": "Read-only MongoDB backend API server for product-slug-idf",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "migrate:idf": "node migrate-idf.js",
+    "migrate:idf:dry": "node migrate-idf.js --dry-run",
+    "test:idf": "node test-idf.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "mongodb": "^6.9.0"
+  }
+}

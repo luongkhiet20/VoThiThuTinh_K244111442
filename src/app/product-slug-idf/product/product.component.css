@@ -1,0 +1,898 @@
+/* ==========================================================================
+   CHÉRI LUXURY FASHION — PRODUCT DETAIL FULL PAGE
+   Color Palette:
+   - Primary Accent: #74070E (Wine Red)
+   - Secondary / Background tint: #FDF2F3, #FAF9F8, #F5F2F2
+   - Text Dark: #1A1A1A, #374151
+   - Text Muted: #6B7280, #8E8E93, #9CA3AF
+   - Borders: #E5E7EB, #F0ECE9
+   ========================================================================== */
+
+:host {
+  display: block;
+  font-family: var(--font-sans);
+  width: 100%;
+}
+
+/* 1. Full Page Container */
+.cheri-product-page-main {
+  width: 100%;
+  min-height: calc(100vh - 160px);
+  background: #FAF9F8;
+  padding: 28px 0 72px 0;
+  box-sizing: border-box;
+}
+
+.cheri-product-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+/* 2. Navigation & Breadcrumbs Bar */
+.cheri-product-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cheri-nav-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 20px;
+  color: #4B5563;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-sans);
+}
+
+.cheri-nav-back-btn:hover {
+  background: #74070E;
+  color: #FFFFFF;
+  border-color: #74070E;
+  box-shadow: 0 4px 12px rgba(116, 7, 14, 0.15);
+}
+
+.cheri-nav-back-btn svg {
+  transition: transform 0.2s ease;
+}
+
+.cheri-nav-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+.cheri-breadcrumb-trail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #6B7280;
+}
+
+.cheri-breadcrumb-trail .trail-link {
+  color: #6B7280;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cheri-breadcrumb-trail .trail-link:hover {
+  color: #74070E;
+}
+
+.cheri-breadcrumb-trail .trail-separator {
+  color: #D1D5DB;
+  font-size: 11px;
+}
+
+.cheri-breadcrumb-trail .trail-current {
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+/* 3. Product Card Container */
+.cheri-product-card,
+.cheri-popup-card {
+  position: relative;
+  width: 100%;
+  background: #FFFFFF;
+  border-radius: 12px;
+  border: 1px solid #F0ECE9;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  font-family: var(--font-sans);
+  overflow: hidden;
+}
+
+/* 4. Loading & Unavailable States */
+.cheri-product-loading,
+.cheri-popup-loading,
+.cheri-product-unavailable,
+.cheri-popup-unavailable {
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.cheri-product-loading .loading-text,
+.cheri-popup-loading .loading-text {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #6B7280;
+  letter-spacing: 0.3px;
+}
+
+.cheri-product-unavailable .unavailable-symbol,
+.cheri-popup-unavailable .unavailable-symbol {
+  font-size: 32px;
+  color: #74070E;
+  margin-bottom: 12px;
+}
+
+.cheri-product-unavailable .unavailable-title,
+.cheri-popup-unavailable .unavailable-title {
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  color: #74070E;
+  margin: 0 0 10px 0;
+}
+
+.cheri-product-unavailable .unavailable-desc,
+.cheri-popup-unavailable .unavailable-desc {
+  font-size: 14px;
+  color: #6B7280;
+  max-width: 420px;
+  margin: 0 0 16px 0;
+  line-height: 1.5;
+}
+
+.cheri-unavailable-back {
+  margin-top: 12px;
+  width: auto;
+  min-width: 180px;
+}
+
+/* 5. Main 2-Column Body */
+.cheri-product-body,
+.cheri-popup-body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   LEFT COLUMN — PRODUCT GALLERY
+   ========================================================================== */
+.cheri-gallery-col {
+  flex: 0 0 46%;
+  max-width: 46%;
+  padding: 16px 28px 24px 28px;
+  background: #FFFFFF;
+  border-right: 1px solid #F0ECE9;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+  position: sticky;
+  top: 85px;
+  align-self: flex-start;
+}
+
+.cheri-main-image-container {
+  position: relative;
+  width: 100%;
+  height: 580px;
+  min-height: 520px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #EFEAE6;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-in;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  margin-top: 0;
+}
+
+.cheri-main-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #FFFFFF;
+  transition: transform 0.35s ease;
+  display: block;
+}
+
+.cheri-main-image-container:hover .cheri-main-image {
+  transform: scale(1.025);
+}
+
+.cheri-zoom-hint {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #E5E7EB;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4B5563;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.cheri-zoom-hint i {
+  font-size: 18px;
+}
+
+.cheri-main-image-container:hover .cheri-zoom-hint {
+  opacity: 1;
+}
+
+.cheri-no-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #9CA3AF;
+  gap: 8px;
+}
+
+.cheri-no-image-placeholder i {
+  font-size: 40px;
+  opacity: 0.6;
+}
+
+.cheri-no-image-placeholder p {
+  font-size: 13.5px;
+  margin: 0;
+}
+
+/* Thumbnail Strip */
+.cheri-thumbnails-row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 8px 2px;
+  scrollbar-width: thin;
+  scrollbar-color: #D1D5DB transparent;
+}
+
+.cheri-thumbnails-row::-webkit-scrollbar {
+  height: 4px;
+}
+
+.cheri-thumbnails-row::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 4px;
+}
+
+.cheri-thumb-item {
+  width: 64px;
+  height: 76px;
+  flex-shrink: 0;
+  border: 1.5px solid #E5E7EB;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #FFFFFF;
+  cursor: pointer;
+  padding: 2px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.cheri-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #FFFFFF;
+}
+
+.cheri-thumb-item:hover {
+  border-color: #A33A41;
+}
+
+.cheri-thumb-item.is-selected {
+  border-color: #74070E;
+  box-shadow: 0 0 0 1.5px #74070E;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN — PRODUCT INFORMATION & ACTIONS
+   ========================================================================== */
+.cheri-details-col {
+  flex: 1;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Category Breadcrumb */
+.cheri-category-breadcrumb {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 1px;
+  color: #8E8E93;
+}
+
+/* Product Title */
+.cheri-product-heading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #74070E;
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: -0.2px;
+  font-family: var(--font-sans);
+}
+
+.cheri-identifiers-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cheri-idf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #74070e;
+  background: rgba(116, 7, 14, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.cheri-idf-badge span {
+  font-weight: 700;
+  color: #74070e;
+}
+
+/* SKU Badge */
+.cheri-sku-badge {
+  font-size: 12px;
+  color: #888888;
+  letter-spacing: 0.3px;
+}
+
+.cheri-sku-badge span {
+  font-family: monospace;
+  font-weight: 600;
+  color: #555555;
+}
+
+/* Short Description */
+.cheri-description-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4B5563;
+  margin: 2px 0 4px 0;
+}
+
+/* Price & Status */
+.cheri-price-status-container {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+}
+
+.cheri-price-group {
+  display: flex;
+  align-items: baseline;
+}
+
+.cheri-price-sale {
+  font-size: 26px;
+  font-weight: 700;
+  color: #74070E;
+  letter-spacing: -0.4px;
+}
+
+.cheri-price-regular {
+  font-size: 15px;
+  color: #9CA3AF;
+  text-decoration: line-through;
+  margin-left: 12px;
+  font-weight: 400;
+}
+
+/* Stock Indicator */
+.cheri-stock-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #ECFDF5;
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.cheri-stock-indicator .stock-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10B981;
+}
+
+.cheri-stock-indicator.is-out {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.cheri-stock-indicator.is-out .stock-pulse {
+  background-color: #EF4444;
+}
+
+/* Divider */
+.cheri-section-divider {
+  border: none;
+  border-top: 1px solid #F0ECE9;
+  margin: 0;
+}
+
+/* Option Groups */
+.cheri-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cheri-option-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.1px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-transform: none;
+}
+
+.cheri-option-current {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.1px;
+  color: #74070E;
+  text-transform: none;
+}
+
+/* 8. Classification Chips */
+.cheri-options-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cheri-choice-pill {
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #D1D5DB;
+  background: #FFFFFF;
+  font-size: 13px;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.cheri-choice-pill:hover {
+  border-color: #74070E;
+}
+
+.cheri-choice-pill.is-active {
+  border-color: #74070E;
+  background: #FDF2F3;
+  color: #74070E;
+  font-weight: 600;
+}
+
+/* 9. Colors Swatches */
+.cheri-colors-swatch-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cheri-color-swatch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #D1D5DB;
+  background: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.cheri-color-swatch-btn .swatch-color-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.cheri-color-swatch-btn .swatch-name-label {
+  font-size: 13px;
+  color: #374151;
+}
+
+.cheri-color-swatch-btn:hover {
+  border-color: #74070E;
+}
+
+.cheri-color-swatch-btn.is-active {
+  border-color: #74070E;
+  background: #FDF2F3;
+}
+
+.cheri-color-swatch-btn.is-active .swatch-name-label {
+  color: #74070E;
+  font-weight: 600;
+}
+
+/* 10. Sizes Grid */
+.cheri-sizes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cheri-size-btn {
+  min-width: 42px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid #D1D5DB;
+  background: #FFFFFF;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.cheri-size-btn:hover {
+  border-color: #74070E;
+}
+
+.cheri-size-btn.is-active {
+  border-color: #74070E;
+  background: #FDF2F3;
+  color: #74070E;
+  font-weight: 600;
+}
+
+/* 14. Quantity Stepper */
+.cheri-quantity-row {
+  margin-top: 4px;
+}
+
+.cheri-stepper-box {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  background: #FFFFFF;
+  overflow: hidden;
+  width: fit-content;
+}
+
+.cheri-stepper-box .stepper-btn {
+  width: 38px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 17px;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+  outline: none;
+}
+
+.cheri-stepper-box .stepper-btn:hover:not([disabled]) {
+  background: #F3F4F6;
+  color: #74070E;
+}
+
+.cheri-stepper-box .stepper-btn[disabled] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.cheri-stepper-box .stepper-count {
+  min-width: 42px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  user-select: none;
+}
+
+/* 15. Action Buttons (Thêm vào giỏ hàng & Mua ngay) */
+.cheri-action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.cheri-action-btn {
+  flex: 1;
+  height: 48px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+.cheri-action-btn.secondary-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #74070E;
+  color: #74070E;
+}
+
+.cheri-action-btn.secondary-btn:hover:not([disabled]) {
+  background: #FDF2F3;
+}
+
+.cheri-action-btn.primary-btn {
+  background: #74070E;
+  border: 1.5px solid #74070E;
+  color: #FFFFFF;
+}
+
+.cheri-action-btn.primary-btn:hover:not([disabled]) {
+  background: #58050A;
+  border-color: #58050A;
+}
+
+.cheri-action-btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 16. Shipping Information Panel */
+.cheri-shipping-panel {
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: #F9FAFB;
+  border: 1px solid #E5E7EB;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cheri-shipping-panel .shipping-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cheri-shipping-panel .shipping-panel-header i,
+.cheri-shipping-panel .shipping-panel-header svg {
+  color: #74070E;
+  flex-shrink: 0;
+}
+
+.cheri-shipping-panel .shipping-panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12.5px;
+}
+
+.cheri-shipping-panel .shipping-fee-line {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cheri-shipping-panel .fee-name {
+  color: #6B7280;
+}
+
+.cheri-shipping-panel .fee-val {
+  font-weight: 600;
+  color: #111827;
+}
+
+.cheri-shipping-panel .shipping-note-line {
+  color: #6B7280;
+  font-style: italic;
+  font-size: 12px;
+}
+
+/* Full Description */
+.cheri-full-desc-panel {
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: #FAF9F8;
+  border-left: 3px solid #74070E;
+  margin-top: 4px;
+}
+
+.cheri-full-desc-panel .full-desc-title {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #74070E;
+  margin-bottom: 6px;
+}
+
+.cheri-full-desc-panel .full-desc-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+/* 18. Tags Container */
+.cheri-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.cheri-tag-item {
+  font-size: 11.5px;
+  color: #6B7280;
+  background: #F3F4F6;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & MOBILE)
+   ========================================================================== */
+@media screen and (max-width: 960px) {
+  .cheri-product-container {
+    padding: 0 16px;
+  }
+
+  .cheri-product-body,
+  .cheri-popup-body {
+    flex-direction: column;
+  }
+
+  .cheri-gallery-col {
+    flex: none;
+    max-width: 100%;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid #F0ECE9;
+    padding: 16px 20px 20px 20px;
+  }
+
+  .cheri-main-image-container {
+    height: 440px;
+    min-height: 380px;
+  }
+
+  .cheri-details-col {
+    padding: 24px 20px 48px 20px;
+  }
+
+  .cheri-product-heading {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .cheri-product-page-main {
+    padding: 16px 0 48px 0;
+  }
+
+  .cheri-product-container {
+    padding: 0 12px;
+  }
+
+  .cheri-product-sheet,
+  .cheri-product-card,
+  .cheri-popup-card {
+    border-radius: 8px;
+  }
+
+  .cheri-gallery-col {
+    padding: 12px 12px 16px 12px;
+  }
+
+  .cheri-main-image-container {
+    height: 360px;
+    min-height: 300px;
+  }
+
+  .cheri-details-col {
+    padding: 20px 14px 36px 14px;
+  }
+
+  .cheri-action-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cheri-action-btn {
+    width: 100%;
+  }
+}
+
+.cheri-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(116, 7, 14, 0.2);
+  border-top-color: #74070e;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

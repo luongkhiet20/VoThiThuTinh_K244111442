@@ -1,0 +1,248 @@
+<div class="products-wrapper">
+  <!-- Container chính -->
+  <div class="main">
+    <div class="products-wrap">
+
+      <!-- Layout 2 cột: Sidebar + Danh sách sản phẩm -->
+      <div class="products-layout">
+
+        <!-- ── Sidebar bên trái ── -->
+        <aside class="products-desktop-sidebar">
+          <div class="sidebar-box">
+            <h3 class="sidebar-heading">Danh Mục</h3>
+            <ul class="cat-list">
+              <li>
+                <button type="button" class="cat-btn" [class.active]="selectedCategory() === 'all'"
+                  (click)="changeCategory('all')">
+                  Tất cả sản phẩm
+                </button>
+              </li>
+              @for (cat of categories(); track cat._id || cat.titleUrl) {
+              <li>
+                <button type="button" class="cat-btn" [class.active]="selectedCategory() === cat.titleUrl"
+                  (click)="changeCategory(cat.titleUrl || '')">
+                  {{ cat.title }}
+                </button>
+              </li>
+              }
+            </ul>
+
+            <hr class="sidebar-divider" />
+
+            <h3 class="sidebar-heading">Khoảng Giá</h3>
+            <div class="price-filter-group">
+              <input type="range" class="price-slider" [min]="minPrice()" [max]="maxPrice()" [step]="100000"
+                [value]="filterPrice()" (input)="priceRange($event)" />
+              <div class="price-labels">
+                <span>{{ minPrice() | priceFormat }} đ</span>
+                <span>Tối đa: {{ filterPrice() | priceFormat }} đ</span>
+              </div>
+            </div>
+
+            <hr class="sidebar-divider" />
+
+            <button type="button" class="btn-clear-filters" (click)="clearAllFilters()">
+              Đặt lại bộ lọc
+            </button>
+          </div>
+        </aside>
+
+        <!-- ── Nội dung chính bên phải ── -->
+        <div class="products-main-content">
+
+          <!-- Thanh Toolbar -->
+          <div class="products-toolbar">
+            <div class="products-toolbar-left">
+              <span class="products-result-count">
+                <strong>{{ pagination().total }}</strong> sản phẩm
+              </span>
+            </div>
+
+            <!-- Tìm kiếm & Sắp xếp -->
+            <div class="products-controls-right">
+              <div class="search-box">
+                <input type="text" class="search-input" placeholder="Tìm theo tên sản phẩm..." [value]="searchQuery()"
+                  (input)="onSearch($event)" />
+                @if (searchQuery()) {
+                <button type="button" class="search-clear-inline" (click)="clearSearch()" aria-label="Xóa tìm kiếm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </button>
+                }
+              </div>
+
+              <select class="sort-select" [value]="sortBy()" (change)="changeSort($event)">
+                @for (opt of sortOptions; track opt.value) {
+                <option [value]="opt.value">{{ opt.label }}</option>
+                }
+              </select>
+
+              <!-- Grid Switcher -->
+              <div class="products-grid-switcher">
+                <button type="button" class="grid-switch-btn" [class.active]="columnsView() === 3"
+                  (click)="setColumns(3)" title="Lưới 3 cột">3</button>
+                <button type="button" class="grid-switch-btn" [class.active]="columnsView() === 4"
+                  (click)="setColumns(4)" title="Lưới 4 cột">4</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active filters badge -->
+          @if (activeFiltersCount() > 0) {
+          <div class="products-active-filters">
+            @if (selectedCategory() !== 'all') {
+            <span class="products-filter-chip">
+              Danh mục: {{ selectedCategory() }}
+            </span>
+            }
+            @if (searchQuery()) {
+            <span class="products-filter-chip">
+              Từ khóa: "{{ searchQuery() }}"
+            </span>
+            }
+            @if (filterPrice() < maxPrice()) { <span class="products-filter-chip">
+              Giá ≤ {{ filterPrice() | priceFormat }} đ
+              </span>
+              }
+              <button type="button" class="chip-clear" (click)="clearAllFilters()">Xóa lọc</button>
+          </div>
+          }
+
+          <!-- Thông báo lỗi kết nối API nếu có -->
+          @if (errorMessage()) {
+          <div class="api-error-banner">
+            <div class="error-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                </path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+            <div class="error-content">
+              <strong>Lỗi tải dữ liệu:</strong> {{ errorMessage() }}
+              <div class="error-hint">Hãy đảm bảo server backend (kết nối MongoDB qua MONGO_URI) đang được khởi động
+                trên cổng 4000.</div>
+            </div>
+            <button type="button" class="btn-retry" (click)="loadProducts()">Thử lại</button>
+          </div>
+          }
+
+          <!-- Trạng thái Loading -->
+          @if (loadingProducts()) {
+          <div class="products-loading-state">
+            <div class="cheri-spinner"></div>
+            <p>Đang truy vấn dữ liệu sản phẩm từ MongoDB...</p>
+          </div>
+          } @else if (products().length > 0) {
+          <!-- Product Grid -->
+          <div class="products-grid" [class.cols-3]="columnsView() === 3" [class.cols-4]="columnsView() === 4">
+            @for (product of products(); track product._id || product.id || product.titleUrl) {
+            <div class="pcard" (click)="openProduct(product)">
+              <!-- Ảnh sản phẩm -->
+              <div class="pcard-img-wrap">
+                <img class="pcard-img"
+                  [src]="product.mainImage?.url || (product.images && product.images[0]) || 'assets/h1.png'"
+                  [alt]="product.title" loading="lazy" />
+
+                <!-- Badges -->
+                @if (isOutOfStock(product)) {
+                <span class="pcard-badge pcard-badge--sold">Hết hàng</span>
+                } @else if (hasDiscount(product)) {
+                <span class="pcard-badge pcard-badge--sale">ƯU ĐÃI</span>
+                }
+
+                <!-- Hover actions -->
+                <div class="pcard-overlay">
+                  <button type="button" class="pcard-overlay-btn pcard-overlay-btn--cart"
+                    (click)="addToCart(product, $event)" title="Thêm giỏ hàng">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="21" r="1"></circle>
+                      <circle cx="20" cy="21" r="1"></circle>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                  </button>
+                  <button type="button" class="pcard-overlay-btn pcard-overlay-btn--view" (click)="openProduct(product)"
+                    title="Xem chi tiết (Slug)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Chi tiết tóm tắt -->
+              <div class="pcard-bottom-row">
+                <div class="pcard-info">
+                  <div class="pcard-meta-row">
+                    @if (product.IdF) {
+                    <span class="pcard-idf">Fashion #{{ product.IdF }}</span>
+                    }
+                    @if (product.tags && product.tags.length > 0) {
+                    <span class="pcard-tag">{{ product.tags[0] }}</span>
+                    }
+                  </div>
+                  <h4 class="pcard-name" [title]="product.title">{{ product.title }}</h4>
+                  <div class="pcard-prices">
+                    <span class="pcard-price">{{ getDisplayPrice(product) | priceFormat }} đ</span>
+                    @if (hasDiscount(product)) {
+                    <span class="pcard-original">{{ getOriginalPrice(product) | priceFormat }} đ</span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- Phân trang -->
+          @if (pagination().totalPages > 1) {
+          <div class="pagination-bar">
+            <button type="button" class="page-btn page-btn-prev" [disabled]="page() <= 1"
+              (click)="changePage(page() - 1)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              <span>Trước</span>
+            </button>
+            <span class="page-info">Trang {{ page() }} / {{ pagination().totalPages }}</span>
+            <button type="button" class="page-btn page-btn-next" [disabled]="page() >= pagination().totalPages"
+              (click)="changePage(page() + 1)">
+              <span>Sau</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+          }
+          } @else if (!errorMessage()) {
+          <!-- Empty State -->
+          <div class="products-empty">
+            <div class="products-empty-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                stroke="#74070e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+            <h3 class="products-empty-title">Không tìm thấy sản phẩm phù hợp</h3>
+            <p class="products-empty-desc">Không có bản ghi nào khớp với điều kiện lọc trong cơ sở dữ liệu MongoDB.</p>
+            <button type="button" class="btn-clear-filters" (click)="clearAllFilters()">Xem tất cả sản phẩm</button>
+          </div>
+          }
+
+        </div><!-- /products-main-content -->
+      </div><!-- /products-layout -->
+
+    </div>
+  </div>
+</div>

@@ -1,59 +1,72 @@
 # VoThiThuTinh_K244111442 - MyApp
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.8.
+Dự án ứng dụng Angular kết hợp Backend Node.js Express kết nối MongoDB Atlas Cloud.
 
-## Development server
+---
 
-To start a local development server, run:
+## 1. Khởi động Backend Server (MongoDB API)
 
-```bash
-ng serve
+Máy chủ backend nằm trong thư mục `my-server-mongodb`, chạy trên cổng `4000`:
+
+```powershell
+cd "d:\Tài liệu\WEBthuchanh\VoThiThuTinh_K244111442\my-app\my-server-mongodb"
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Các Endpoint Backend cung cấp:
+- Kiểm tra trạng thái: `GET http://localhost:4000/api/health`
+- Danh sách sản phẩm: `GET http://localhost:4000/api/products`
+- Danh mục sản phẩm: `GET http://localhost:4000/api/products/categories`
+- Chi tiết theo Slug: `GET http://localhost:4000/api/products/:slug`
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 2. Khởi động Frontend Angular
 
-```bash
-ng generate component component-name
+Ứng dụng Angular chạy trên cổng mặc định `4200`:
+
+```powershell
+cd "d:\Tài liệu\WEBthuchanh\VoThiThuTinh_K244111442\my-app"
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Các đường dẫn chức năng:
+- Danh sách sản phẩm: `http://localhost:4200/product-slug-idf/all`
+- Chi tiết sản phẩm theo Slug: `http://localhost:4200/product-slug-idf/:slug`
 
-```bash
-ng generate --help
+---
+
+## 3. Lệnh Build và Kiểm thử
+
+### Build Frontend:
+```powershell
+npm run build
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
+### Chạy kiểm thử Frontend:
+```powershell
 ng test
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 4. Quản lý và Kiểm thử IdF cho Fashion
 
-```bash
-ng e2e
+### Kiểm tra thử migration (Dry-run, không ghi DB):
+```powershell
+cd "d:\Tài liệu\WEBthuchanh\VoThiThuTinh_K244111442\my-app\my-server-mongodb"
+npm run migrate:idf:dry
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### Chạy migration chính thức cấp IdF và tạo Unique Index:
+```powershell
+cd "d:\Tài liệu\WEBthuchanh\VoThiThuTinh_K244111442\my-app\my-server-mongodb"
+npm run migrate:idf
+```
 
-## Additional Resources
+### Chạy kiểm thử tự động toàn diện IdF và Backend:
+```powershell
+cd "d:\Tài liệu\WEBthuchanh\VoThiThuTinh_K244111442\my-app\my-server-mongodb"
+npm run test:idf
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
